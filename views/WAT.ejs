@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Word Display</title>
+    <style>
+        h1 {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 10em;
+        }
+      #inputSection{
+             position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 15em;
+        }
+        #displayBut{
+            height: 5vh;
+            width: 20vw;
+            font-style: normal;
+            font-size: 20px;
+        }
+      
+    </style>
+</head>
+
+<body>
+    <div id="inputSection">
+        <textarea id="wordInput" rows="4" cols="50" placeholder="Enter words separated by newlines"></textarea>
+        <button id="displayBut" onclick="displayWords()">Display Words</button>
+    </div>
+    <h1 id="wordDisplay"> </h1>
+    <audio id="audioElement" src="./sword.mp3"></audio>
+
+    <script>
+        const inputSection = document.getElementById("inputSection");
+        const wordInput = document.getElementById("wordInput");
+        const wordDisplay = document.getElementById("wordDisplay");
+        const audioElement = document.getElementById("audioElement");
+        let words = []; // for  frontend
+
+        // for hardcoded data
+        // let words = ['HOT', 'SCIENCE', 'ARMY', 'CURE ', 'DESIRE ', 'DEMAND ', 'CROWD', 'LIMIT', 'MOVEMENT ', 'OPPORTUNITY ', 'POOR', 'OPPOSE', 'WOMEN', 'SMART', 'PLEASURE'];
+        //end hardcoded data
+        let currentIndex = 0;
+
+        async function displayWords() {
+            inputSection.style.display = "none";
+            words = wordInput.value.toUpperCase().split('\n');  // for  frontend i have to turn on which will convert the word into array of objects
+            console.log(words);
+
+            await displayNextWord();
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function displayNextWord() {
+            if (currentIndex < words.length) {
+                const word = words[currentIndex];
+
+                await new Promise((resolve) => {
+                    audioElement.play();
+                    audioElement.onended = resolve;
+                });
+
+                wordDisplay.textContent = word;
+
+
+
+
+                await sleep(14000);
+
+                currentIndex++;
+                // await sleep(2000); 
+                await displayNextWord();
+            }
+        }
+    </script>
+</body>
+
+</html>
