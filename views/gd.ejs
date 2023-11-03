@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Timer with Sound Effect</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
+</head>
+
+<body>
+    <h2>Group Discussion</h2>
+    <h1 id="timer">04:00</h1>
+    <div id="inputSectionLec">
+
+        <button id="start">Start</button>
+        <button id="pause">Pause</button>
+        <button id="stop">Reset</button>
+    </div>
+
+    <audio id="clapSound">
+        <source src="beep.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let timer;
+        let timeLeft = 240;
+        let isRunning = false;
+        let lastMouseMoveTime = Date.now();
+
+        const timerDisplay = document.getElementById('timer');
+        const startButton = document.getElementById('start');
+        const pauseButton = document.getElementById('pause');
+        const stopButton = document.getElementById('stop');
+        const clapSound = document.getElementById('clapSound');
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                hideButtons();
+                timer = setInterval(function () {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateDisplay();
+                    } else {
+                        clearInterval(timer);
+                        isRunning = false;
+                        clapSound.play();
+                        showButtons();
+                    }
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            if (isRunning) {
+                clearInterval(timer);
+                isRunning = false;
+                showButtons();
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(timer);
+            isRunning = false;
+            timeLeft = 240; // Reset the timer to 3 minutes
+            updateDisplay();
+            clapSound.pause();
+            clapSound.currentTime = 0;
+            showButtons();
+        }
+
+        function hideButtons() {
+            startButton.style.display = 'none';
+            pauseButton.style.display = 'none';
+            stopButton.style.display = 'none';
+        }
+
+        function showButtons() {
+            startButton.style.display = 'inline-block';
+            pauseButton.style.display = 'inline-block';
+            stopButton.style.display = 'inline-block';
+        }
+
+        function hideButtonsAfterTimeout() {
+            if (isRunning) {
+                const currentTime = Date.now();
+                if (currentTime - lastMouseMoveTime > 3000) {
+                    hideButtons();
+                }
+            }
+        }
+
+        document.addEventListener('mousemove', function () {
+            showButtons();
+            lastMouseMoveTime = Date.now();
+            hideButtonsAfterTimeout();
+        });
+
+
+
+        startButton.addEventListener('click', startTimer);
+        pauseButton.addEventListener('click', pauseTimer);
+        stopButton.addEventListener('click', stopTimer);
+    </script>
+</body>
+
+</html>

@@ -6,3 +6,53 @@ a {
   font-size: 50px;
   gap: 5px;
 }
+
+
+a {
+  text-decoration: none;
+  color: #00B7FF;
+  font-size: 50px;
+  gap: 5px;
+}
+
+        h1 {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 10em;
+        }
+        h2 {
+            position: absolute;
+            top: 2%;
+            left: 45%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 2em;
+        }
+      #inputSection{
+             position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 15em;
+        }
+      #inputSectionLec{
+             position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 15em;
+        }
+   
+        #displayBut{
+            height: 5vh;
+            width: 20vw;
+            font-style: normal;
+            font-size: 20px;
+        }
+      
+  
