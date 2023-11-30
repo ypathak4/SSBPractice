@@ -81,7 +81,15 @@
                 currentIndex++;
                 // await sleep(2000); 
                 await displayNextWord();
+            } else {
+                        // All words have been displayed, show "Time's Up"
+                        displayTimesUp();
+                    }
             }
+
+                function displayTimesUp() {
+                    wordDisplay.textContent = "Time's Up!";
+                }
         }
     </script>
 </body>
